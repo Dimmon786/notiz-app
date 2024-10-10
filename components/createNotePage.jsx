@@ -5,19 +5,19 @@ import { getNotes, saveNote } from './storage/noteStorage';
 
 const CreateNotePage = () => {
   const router = useRouter(); // Verwende den useRouter Hook von expo-router
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [isImportant, setImportant] = useState(false);
+  const [title, setTitle] = useState(''); // Zustand für den Titel der Notiz
+  const [body, setBody] = useState(''); // Zustand für den Inhalt der Notiz
+  const [isImportant, setImportant] = useState(false); // Zustand für die Markierung, ob die Notiz wichtig ist
 
   // Funktion zum Speichern der Notiz
   const handleSaveNote = async () => {
     const note = {
-      id: new Date().toISOString(),
+      id: new Date().toISOString(), // Einzigartige ID basierend auf dem aktuellen Datum erstellen
       title,
       body,
       isImportant,
     };
-    await saveNote(note);
+    await saveNote(note); // Notiz speichern
     router.back(); // Zur vorherigen Seite navigieren
   };
 
@@ -153,3 +153,4 @@ const styles = StyleSheet.create({
 });
 
 export default CreateNotePage;
+module.exports = CreateNotePage;
