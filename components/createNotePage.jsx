@@ -1,44 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { getNotes, saveNote } from './storage/noteStorage';
 
-
-const HomePage = () => {
-  const [notes, setNotes] = useState([]);
-
-  useEffect(() => {
-    const fetchNotes = async () => {
-      const savedNotes = await getNotes();
-      setNotes(savedNotes);
-    };
-    fetchNotes();
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Notizen</Text>
-      {notes.length === 0 ? (
-        <Text>Keine Notizen vorhanden</Text>
-      ) : (
-        notes.map((note) => (
-          <View key={note.id} style={styles.noteCard}>
-            <Text style={styles.noteTitle}>{note.title}</Text>
-            <Text>{note.body}</Text>
-            {note.isImportant && <Text style={styles.importantLabel}>Wichtig!</Text>}
-          </View>
-        ))
-      )}
-    </View>
-  );
-};
-
 const CreateNotePage = () => {
-  const navigation = useNavigation();
+  const router = useRouter(); // Verwende den useRouter Hook von expo-router
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [isImportant, setImportant] = useState(false);
 
+  // Funktion zum Speichern der Notiz
   const handleSaveNote = async () => {
     const note = {
       id: new Date().toISOString(),
@@ -47,13 +18,14 @@ const CreateNotePage = () => {
       isImportant,
     };
     await saveNote(note);
-    navigation.goBack();
+    router.back(); // Zur vorherigen Seite navigieren
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Neue Notiz erstellen</Text>
 
+      {/* Eingabefeld für den Titel der Notiz */}
       <TextInput
         style={styles.input}
         placeholder="Titel"
@@ -61,6 +33,7 @@ const CreateNotePage = () => {
         onChangeText={setTitle}
       />
 
+      {/* Eingabefeld für den Inhalt der Notiz */}
       <TextInput
         style={styles.textArea}
         placeholder="Notizinhalt"
@@ -69,6 +42,7 @@ const CreateNotePage = () => {
         multiline
       />
 
+      {/* Umschaltfeld für wichtige Notizen */}
       <View style={styles.toggleContainer}>
         <Text>Wichtig:</Text>
         <TouchableOpacity
@@ -79,6 +53,7 @@ const CreateNotePage = () => {
         </TouchableOpacity>
       </View>
 
+      {/* Speicherbutton */}
       <Button title="Speichern" onPress={handleSaveNote} />
     </View>
   );
@@ -158,6 +133,23 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
   },
+  addButton: {
+    backgroundColor: '#007AFF',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 32,
+    lineHeight: 40,
+    textAlign: 'center',
+  },
 });
 
-export { HomePage, CreateNotePage };
+export default CreateNotePage;

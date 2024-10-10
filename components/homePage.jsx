@@ -1,43 +1,29 @@
 import React from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Link } from 'expo-router';
 
 const HomePage = () => {
-    const navigation = useNavigation();
-
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Notiz App</Text>
 
             <View style={styles.cardContainer}>
-                <TouchableOpacity
-                    style={styles.card}
-                    onPress={() => navigation.navigate('RecentNotes')}
-                >
+                <Link href="/recentNotes" style={styles.card}>
                     <Text style={styles.cardText}>Letzte Notizen</Text>
-                </TouchableOpacity>
+                </Link>
 
-                <TouchableOpacity
-                    style={styles.card}
-                    onPress={() => navigation.navigate('AllNotes')}
-                >
+                <Link href="/allNotes" style={styles.card}>
                     <Text style={styles.cardText}>Alle Notizen</Text>
-                </TouchableOpacity>
+                </Link>
 
-                <TouchableOpacity
-                    style={styles.card}
-                    onPress={() => navigation.navigate('Calendar')}
-                >
+                <Link href="/calendar" style={styles.card}>
                     <Text style={styles.cardText}>Kalender</Text>
-                </TouchableOpacity>
+                </Link>
             </View>
 
-            <TouchableOpacity
-                style={styles.addButton}
-                onPress={() => navigation.navigate('CreateNote')}
-            >
+            <Link href="/createNote" style={styles.addButton}>
                 <Text style={styles.addButtonText}>+</Text>
-            </TouchableOpacity>
+            </Link>
         </View>
     )
 };

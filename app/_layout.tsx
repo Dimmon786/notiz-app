@@ -1,9 +1,10 @@
-import { Stack } from "expo-router";
+import React from 'react';
+import { Stack } from 'expo-router';
 
-export default function RootLayout() {
+export default function Layout() {
   return (
     <Stack>
-      <Stack.Screen name="index" />
+      {/* Der Stack wird automatisch die Routen in diesem Verzeichnis verwalten */}
     </Stack>
   );
 }
