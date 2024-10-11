@@ -1,0 +1,55 @@
+@startuml
+
+' Hauptklasse der Anwendung
+class NoteApp {
+  +notes: List<Note>
+  +createNote(): void
+  +deleteNote(): void
+  +editNote(): void
+  +getAllNotes(): List<Note>
+  +getImportantNotes(): List<Note>
+}
+
+' Klasse zur Darstellung einzelner Notizen
+class Note {
+  +id: String
+  +title: String
+  +body: String
+  +isImportant: boolean
+  +timestamp: Date
+}
+
+' Klasse für die Speicherung von Notizen
+class NoteStorage {
+  +getNotes(): List<Note>
+  +saveNote(note: Note): void
+  +deleteNote(noteId: String): void
+}
+
+' Klasse für die Kalendereinbindung
+class CalendarIntegration {
+  +addReminder(note: Note, date: Date): void
+  +getReminders(): List<Reminder>
+}
+
+' Klasse zur Darstellung einer Erinnerung
+class Reminder {
+  +id: String
+  +noteId: String
+  +reminderDate: Date
+}
+
+' Klasse für die Kameraintegration
+class CameraIntegration {
+  +capturePhoto(): Image
+  +attachPhotoToNote(note: Note, photo: Image): void
+}
+
+' Verbindungen zwischen den Klassen
+NoteApp --> Note : manages
+NoteApp --> NoteStorage : uses
+NoteApp --> CalendarIntegration : uses
+Note --> Reminder : has
+NoteApp --> CameraIntegration : uses
+
+@enduml
